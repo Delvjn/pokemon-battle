@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import BattlePage from './pages/battlePage'
+import BattlePage from './pages/BattlePage';
 
 function App() {
   return (

@@ -4,17 +4,38 @@ const API_BASE_URL = 'https://pokeapi.co/api/v2'
 
 async function getById(id) {
     try {
-        const response = await axios.get(`${API_BASE_URL}/${id}`);
+        const response = await axios.get(`${API_BASE_URL}/pokemon/${id}`);
 
-        return {
-            // id: response.data.id,
-            // joke: response.data.joke
-            response
-        }
+        return response.data;
+        
     } catch (error) {
         console.error('Failed to load:', error)
         return null
     }
 }
 
-export { getById }
+async function getMoveByUrl(url) {
+  try {
+        const response = await axios.get(url);
+
+        return response.data;
+        
+    } catch (error) {
+        console.error('Failed to load:', error)
+        return null
+    }
+}
+
+async function getTypeByUrl(url) {
+  try {
+        const response = await axios.get(url);
+
+        return response.data;
+        
+    } catch (error) {
+        console.error('Failed to load:', error)
+        return null
+    }
+}
+
+export { getById, getMoveByUrl, getTypeByUrl }
