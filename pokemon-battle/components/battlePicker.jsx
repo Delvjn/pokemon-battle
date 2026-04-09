@@ -2,21 +2,20 @@ import { useEffect, useState } from "react"
 import { getById, getMoveByUrl, getTypeByUrl, loadPokemon } from "../services/pokemonService"
 import { Box, Button, Typography } from "@mui/material"
 
-function BattlePicker() {
+function BattlePicker({ onBattleStart }) {
 
     const [ pokemons, setPokemons ] = useState([])
     const [ yourPokemon, setYourPokemon ] = useState(null)
     const [ opponentPokemon, setOpponentPokemon ] = useState(null)
     const [ yourPokemonLocked, setYourPokemonLocked ] = useState(false)
     const [ opponentPokemonLocked, setOpponentPokemonLocked ] = useState(false)
-    const [ battlePokemon, setBattlePokemon ] = useState(null)
 
     async function handleStartBattle() {
         const [yourLoaded, opponentLoaded] = await Promise.all([
             loadPokemon(yourPokemon),
             loadPokemon(opponentPokemon),
         ])
-        setBattlePokemon({ yours: yourLoaded, opponent: opponentLoaded })
+        onBattleStart(yourLoaded, opponentLoaded)
     }
 
     async function GetPokemons() {
