@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import { getById } from "../services/pokemonService"
-import Grid from "@mui/material/Grid"
+import { getById, getMoveByUrl, getTypeByUrl, loadPokemon } from "../services/pokemonService"
 import { Box, Button, Typography } from "@mui/material"
 
 function BattlePicker() {
@@ -10,6 +9,15 @@ function BattlePicker() {
     const [ opponentPokemon, setOpponentPokemon ] = useState(null)
     const [ yourPokemonLocked, setYourPokemonLocked ] = useState(false)
     const [ opponentPokemonLocked, setOpponentPokemonLocked ] = useState(false)
+    const [ battlePokemon, setBattlePokemon ] = useState(null)
+
+    async function handleStartBattle() {
+        const [yourLoaded, opponentLoaded] = await Promise.all([
+            loadPokemon(yourPokemon),
+            loadPokemon(opponentPokemon),
+        ])
+        setBattlePokemon({ yours: yourLoaded, opponent: opponentLoaded })
+    }
 
     async function GetPokemons() {
         const pokemon1 = await getById(3)
@@ -241,6 +249,7 @@ function BattlePicker() {
                         size="large"
                         color="success"
                         disabled={!(yourPokemonLocked && opponentPokemonLocked)}
+                        onClick={handleStartBattle}
                         sx={{ px: 5, py: 2, fontSize: "1.3rem" }}
                     >
                         Start Battle
